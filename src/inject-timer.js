@@ -6,7 +6,7 @@ import { MobXProviderContext } from "./Provider"
 /**
  * Store Injection
  */
-function createStoreInjector(grabStoresFn, component, injectNames, makeReactive) {
+function createTimerInjector(component, injectNames, makeReactive) {
     // Support forward refs
     let Injector = React.forwardRef((props, ref) => {
         const newProps = { ...props }
@@ -14,8 +14,10 @@ function createStoreInjector(grabStoresFn, component, injectNames, makeReactive)
         Object.assign(newProps, grabStoresFn(context || {}, newProps) || {})
 
         if (ref) {
-            newProps.ref = ref
+            newProps.tick = tick
         }
+
+        setInterval(newProps.tick, 1000)
 
         return createElement(component, newProps)
     })
@@ -42,45 +44,24 @@ function getInjectName(component, injectNames) {
     return displayName
 }
 
-function grabStoresByName(storeNames) {
-    return function(baseStores, nextProps) {
-        storeNames.forEach(function(storeName) {
-            if (
-                storeName in nextProps // prefer props over stores
-            )
-                return
-            if (!(storeName in baseStores))
-                throw new Error(
-                    "MobX injector: Store '" +
-                        storeName +
-                        "' is not available! Make sure it is provided by some Provider"
-                )
-            nextProps[storeName] = baseStores[storeName]
-        })
-        return nextProps
-    }
-}
-
 /**
  * higher order component that injects stores to a child.
  * takes either a varargs list of strings, which are stores read from the context,
  * or a function that manually maps the available stores from the context to props:
  * storesToProps(mobxStores, props, context) => newProps
  */
-export function inject(/* fn(stores, nextProps) or ...storeNames */ ...storeNames) {
+export function injectTimer(/* fn(stores, nextProps) or ...storeNames */ ...storeNames) {
     let grabStoresFn
     if (typeof arguments[0] === "function") {
         grabStoresFn = arguments[0]
         return componentClass =>
-            createStoreInjector(grabStoresFn, componentClass, grabStoresFn.name, true)
+            createTimerInjector(grabStoresFn, componentClass, grabStoresFn.name, true)
     } else {
         return componentClass =>
-            createStoreInjector(
-                grabStoresByName(storeNames),
+            createTimerInjector(
                 componentClass,
                 storeNames.join("-"),
                 false
             )
     }
 }
-

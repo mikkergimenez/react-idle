@@ -19,7 +19,6 @@ export {
 export { observer } from "./observer"
 
 export { Provider, MobXProviderContext } from "./Provider"
-export { inject } from "./inject"
+export { injectTimer } from "./inject-timer"
 export { disposeOnUnmount } from "./disposeOnUnmount"
 export { PropTypes } from "./propTypes"
-
