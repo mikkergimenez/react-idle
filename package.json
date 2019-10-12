@@ -1,18 +1,18 @@
 {
-  "name": "incremental-react",
+  "name": "react-idle",
   "version": "0.0.1",
   "description": "React tools for building an incremental game",
   "source": "src/index.js",
-  "main": "dist/incremental-react.js",
-  "jsnext:main": "dist/incremental-react.module.js",
-  "umd:main": "dist/incremental-react.umd.js",
-  "unpkg": "dist/incremental-react.umd.js",
-  "module": "dist/incremental-react.module.js",
-  "react-native": "dist/incremental-react.rn.module.js",
-  "types": "dist/incremental-react.d.ts",
+  "main": "dist/react-idle.js",
+  "jsnext:main": "dist/react-idle.module.js",
+  "umd:main": "dist/react-idle.umd.js",
+  "unpkg": "dist/react-idle.umd.js",
+  "module": "dist/react-idle.module.js",
+  "react-native": "dist/react-idle.rn.module.js",
+  "types": "dist/react-idle.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mikkergimenez/incremental-react.git"
+    "url": "https://github.com/mikkergimenez/react-idle.git"
   },
   "scripts": {
     "prettier": "prettier --write \"**/*.js\" \"**/*.ts\"",
@@ -22,9 +22,9 @@
     "test:ci": "jest -i --coverage && yarn test:ts && yarn lint",
     "size": "size-limit",
     "build": "yarn bundle && yarn copytypes && yarn makern",
-    "copytypes": "shx cp src/index.d.ts dist/incremental-react.d.ts",
-    "makern": "shx cp dist/incremental-react.module.js dist/incremental-react.rn.module.js && yarn replace \"react-dom\" \"react-native\" dist/incremental-react.rn.module.js --silent",
-    "bundle": "microbundle  --jsx React.createElement --external mobx,react,react-dom,incremental-react-lite --globals react-dom=ReactDOM,react=React,incremental-react-lite=mobxReactLite --name mobxReact",
+    "copytypes": "shx cp src/index.d.ts dist/react-idle.d.ts",
+    "makern": "shx cp dist/react-idle.module.js dist/incremental-react.rn.module.js && yarn replace \"react-dom\" \"react-native\" dist/incremental-react.rn.module.js --silent",
+    "bundle": "microbundle  --jsx React.createElement --external mobx,react,react-dom,react-idle-lite --globals react-dom=ReactDOM,react=React,incremental-react-lite=mobxReactLite --name mobxReact",
     "watch": "jest --watch"
   },
   "author": "Mikker Gimenez-Peterson",
@@ -78,10 +78,7 @@
     "shx": "^0.3.2",
     "size-limit": "^1.3.2",
     "typescript": "^2.6.0"
-  },
-  "dependencies": {
-    "incremental-react-lite": "1.4.1"
-  },
+  }
   "files": [
     "dist"
   ],
